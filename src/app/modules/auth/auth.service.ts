@@ -16,7 +16,6 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
       config.jwt.refresh_secret as Secret,
     );
   } catch (error) {
-    console.log(error);
     throw new ApiError(httpStatus.FORBIDDEN, "Invalid refresh token");
   }
 
@@ -57,7 +56,7 @@ const userLogin = async (payload: ILoginData) => {
   );
 
   if (!isMatchedPassword) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Wrong Password");
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Wrong Credential");
   }
 
   const accessToken = jwtHelpers.createToken(

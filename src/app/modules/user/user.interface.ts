@@ -5,6 +5,7 @@ export type IUser = {
   name: string;
   password: string;
   email: string;
+  photoUrl: string;
 };
 
 export type IUserMethods = {

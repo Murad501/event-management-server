@@ -23,17 +23,21 @@ export const userSchema = new Schema<
       required: true,
       unique: true,
     },
+    photoUrl: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
     toJSON: {
       virtuals: true,
     },
-  },
+  }
 );
 
 userSchema.methods.isUserExist = async function (
-  email,
+  email
 ): Promise<Partial<IUser> | null> {
   const user = await User.findOne({ email }, { _id: 1, password: 1 });
 
@@ -42,7 +46,7 @@ userSchema.methods.isUserExist = async function (
 
 userSchema.methods.isPasswordMatched = async function (
   givenPassword,
-  savedPassword,
+  savedPassword
 ): Promise<boolean> {
   const isMatched = await compare(givenPassword, savedPassword);
   return isMatched;

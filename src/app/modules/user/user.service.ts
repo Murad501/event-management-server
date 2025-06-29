@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import httpStatus from "http-status";
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
 import ApiError from "../../../errors/ApiError";
 
-const createUser = async (user: IUser): Promise<IUser | null> => {
+const createUser = async (user: IUser): Promise<Partial<IUser> | null> => {
   const isUserExist = await User.findOne({ email: user.email });
 
   if (isUserExist) {
@@ -19,7 +20,9 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Failed to create User");
   }
 
-  return result;
+  const { password, ...rest } = result.toObject ? result.toObject() : result;
+
+  return rest;
 };
 
 export const UserService = {
