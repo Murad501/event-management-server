@@ -1,0 +1,13 @@
+node_modules
+.env.local
+.env.development
+.env.test
+dist
+build
+.git
+.gitignore
+README.md
+yarn.lock
+.eslintrc.js
+.prettierrc
+*.log 
