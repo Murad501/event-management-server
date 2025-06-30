@@ -32,7 +32,27 @@ const RemoveRegister = catchAsync(async (req, res) => {
   });
 });
 
+const CheckRegistration = catchAsync(async (req, res) => {
+  const { event } = req.params;
+  const user = req?.user;
+  
+  const payload = {
+    event,
+    user: user as string
+  };
+  
+  const result = await EventRegisterService.CheckRegistration(payload);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: result.isRegistered ? "User is registered for this event" : "User is not registered for this event",
+    data: result,
+  });
+});
+
 export const EventRegistrationController = {
   RemoveRegister,
   Register,
+  CheckRegistration,
 };

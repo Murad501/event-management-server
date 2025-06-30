@@ -5,7 +5,7 @@ import { EventRegistration } from "./event-registration.model";
 import { Event } from "../event/event.model";
 
 const RegisterEvent = async (payload: IEventRegistration) => {
-  const event = Event.findById(payload.event);
+  const event = await Event.findById(payload.event);
   if (!event) {
     throw new ApiError(httpStatus.NOT_FOUND, "Event not found");
   }
@@ -22,12 +22,12 @@ const RegisterEvent = async (payload: IEventRegistration) => {
 
   return result;
 };
-const RemoveRegistration = async (payload: IEventRegistration) => {
-  const event = EventRegistration.findOne(payload);
+const RemoveRegistration = async (payload: {event:string, user:string}) => {
+  const event = await EventRegistration.findOne(payload);
   if (!event) {
     throw new ApiError(httpStatus.NOT_FOUND, "Registration not found");
   }
-  const result = EventRegistration.findOneAndDelete(payload);
+  const result = await EventRegistration.findOneAndDelete(payload);
 
   if (!result) {
     throw new ApiError(
@@ -38,5 +38,13 @@ const RemoveRegistration = async (payload: IEventRegistration) => {
 
   return result;
 };
+const CheckRegistration = async (payload: IEventRegistration) => {
+  const registration = await EventRegistration.findOne(payload);
+  
+  return {
+    isRegistered: !!registration,
+    registration: registration || null
+  };
+};
 
-export const EventRegisterService = { RegisterEvent, RemoveRegistration };
+export const EventRegisterService = { RegisterEvent, RemoveRegistration, CheckRegistration };

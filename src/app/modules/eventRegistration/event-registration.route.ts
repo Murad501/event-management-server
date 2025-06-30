@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/", auth(), EventRegistrationController.Register);
 router.delete("/", auth(), EventRegistrationController.RemoveRegister);
+router.get("/check/:event", auth(), EventRegistrationController.CheckRegistration);
 
 export const EventRegistrationRoutes = router;

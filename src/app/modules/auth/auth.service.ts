@@ -44,7 +44,7 @@ const userLogin = async (payload: ILoginData) => {
 
   const result = await User.findOne(
     { email: payload.email },
-    { password: 1, _id: 1, email: 1 },
+    { password: 1, _id: 1, email: 1, name: 1, photoUrl: 1 },
   );
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "User Does Not Exist");
@@ -71,7 +71,7 @@ const userLogin = async (payload: ILoginData) => {
     config.jwt.refresh_expires_in as string,
   );
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, user:result };
 };
 
 export const AuthService = { refreshToken, userLogin };

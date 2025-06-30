@@ -72,9 +72,26 @@ const getAllEvents = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyEvents = catchAsync(async (req: Request, res: Response) => {
+  const user = req?.user;
+  const filters = pick(req.query, eventFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+
+  const result = await EventService.getMyEvents(user as string, filters, paginationOptions);
+
+  sendResponse<IEvent[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My events fetched successfully",
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
 export const EventController = {
   CreateEvent,
   getAllEvents,
+  getMyEvents,
   UpdateEvent,
   GetEvent,
   deleteEvent,
