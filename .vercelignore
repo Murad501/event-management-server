@@ -10,4 +10,5 @@ README.md
 yarn.lock
 .eslintrc.js
 .prettierrc
-*.log 
+*.log
+!api 

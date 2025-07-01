@@ -12,6 +12,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// test route
+app.get("/", (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    message: "Event Management Server is running successfully!",
+    timestamp: new Date().toISOString()
+  });
+});
+
 // routes
 app.use("/api/v1/", routes);
 
