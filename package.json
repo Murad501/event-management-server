@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "build": "rimraf dist && tsc",
+    "build": "tsc",
     "vercel-build": "tsc",
     "lint": "eslint . --ext .ts"
   },
@@ -42,7 +42,7 @@
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
-    "rimraf": "^5.0.0",
+
     "winston": "^3.11.0"
   }
 }
